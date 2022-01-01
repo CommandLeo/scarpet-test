@@ -487,7 +487,6 @@ __on_player_places_block(player, item_tuple, hand, block) -> (
 );
 
 __on_tick() -> (
-    return();
     if(!global_stat, return());
     if((global_stat:0 == 'extra' && global_stat:1 != 'bedrock_removed') || global_stat == ['custom', 'play_time'] || global_stat == ['custom', 'play_one_minute'], for(player('all'), schedule(0, 'updateStat', _)); schedule(0, 'calculateTotal'));
 );
