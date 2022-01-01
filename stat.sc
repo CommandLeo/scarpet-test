@@ -63,6 +63,10 @@ __config() -> {
         {
         'source' -> str('https://raw.githubusercontent.com/CommandLeo/scarpet/main/resources/stat/display_names/%d.json', global_game_major_target),
         'target' -> str('display_names/%d.json', global_game_major_target)
+        },
+        {
+            'source' -> 'https://raw.githubusercontent.com/CommandLeo/scarpet/main/resources/stat/combined/',
+            'target' -> 'combined/'
         }
     ],
     'commands' -> {
@@ -301,7 +305,7 @@ getStat(player, category, event) -> (
     );
     if(category == 'extra',
         if(event == 'bedrock_removed', return(global_bedrock_removed:(player(player)~'uuid')));
-        return(player~event);
+        return(player(player)~event);
     );
     return(statistic(player, category, event));
 );
@@ -438,7 +442,9 @@ removeCarouselEntry(index) -> (
 );
 
 listCarouselEntries() -> (
-    print(format(reduce(global_carousel_data:'entries', [..._a, ' \n  ', '#EB4D4Bb ❌', '^r Remove entry', str('?/%s carousel remove %d', global_app_name, _i), '  ', str('g %s.%s', _)], ['f » ', 'g Carousel entries: ', '#26DE81b (+)', '^l Add more entries', str('?/%s carousel add ', global_app_name)])));
+    entries = global_carousel_data:'entries';
+    if(!length(entries), exit(print(format('f » ', 'g No entries to show, the carousel is empty'))));
+    print(format(reduce(entries, [..._a, ' \n  ', '#EB4D4Bb ❌', '^r Remove entry', str('?/%s carousel remove %d', global_app_name, _i), '  ', str('g %s.%s', _)], ['f » ', 'g Carousel entries: ', '#26DE81b (+)', '^l Add more entries', str('?/%s carousel add ', global_app_name)])));
 );
 
 carousel(interval, entries, i) -> (
@@ -471,8 +477,9 @@ __on_player_places_block(player, item_tuple, hand, block) -> (
 );
 
 __on_tick() -> (
+    return();
     if(!global_stat, return());
-    if((global_stat:0 == 'extra' && global_stat:1 != 'bedrock_removed') || global_stat == ['custom', 'play_time'] || global_stat == ['custom', 'play_one_minute'], for(player('all'), updateStat(_)); calculateTotal());
+    if((global_stat:0 == 'extra' && global_stat:1 != 'bedrock_removed') || global_stat == ['custom', 'play_time'] || global_stat == ['custom', 'play_one_minute'], for(player('all'), schedule(0, 'updateStat', _)); schedule(0, 'calculateTotal'));
 );
 
 __on_player_connects(player) -> (
