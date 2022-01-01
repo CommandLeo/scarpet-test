@@ -439,6 +439,7 @@ setCarouselInterval(seconds) -> (
 );
 
 addCarouselEntry(entry, category) -> (
+    if(category == 'combined', parseCombinedFile(entry));
     global_carousel_data:'entries' += [category, entry];
     print(format('f » ', 'g Successfully added an entry to the carousel'));
 );
@@ -447,6 +448,7 @@ removeCarouselEntry(index) -> (
     entries = global_carousel_data:'entries';
     if(index >= length(entries), exit(print('§cInvalid index')));
     delete(entries, index);
+    print(format('f » ', 'g The entry was removed from the carousel'));
 );
 
 listCarouselEntries() -> (
