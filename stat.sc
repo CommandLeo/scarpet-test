@@ -65,8 +65,16 @@ __config() -> {
         'target' -> str('display_names/%d.json', global_game_major_target)
         },
         {
-            'source' -> 'https://raw.githubusercontent.com/CommandLeo/scarpet/main/resources/stat/combined/',
-            'target' -> 'combined/'
+            'source' -> 'https://raw.githubusercontent.com/CommandLeo/scarpet/main/resources/stat/combined/slimestone.txt',
+            'target' -> 'combined/slimestone.txt'
+        },
+        {
+            'source' -> 'https://raw.githubusercontent.com/CommandLeo/scarpet/main/resources/stat/combined/concrete_placed.txt',
+            'target' -> 'combined/concrete_placed.txt'
+        },
+        {
+            'source' -> 'https://raw.githubusercontent.com/CommandLeo/scarpet/main/resources/stat/combined/stones_mined.txt',
+            'target' -> 'combined/stones_mined.txt'
         }
     ],
     'commands' -> {
