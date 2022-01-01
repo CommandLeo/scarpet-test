@@ -277,9 +277,8 @@ parseCombinedFile(name) -> (
 
 isInvalidEntry(entry) -> (
     if(entry == global_total_text, return(false));
-    if(global_stat:0 == 'digs' && global_server_whitelisted && system_info('server_whitelist')~str(entry) == null, return(true));
-    return(!(global_server_whitelisted && global_stat:0 == 'digs') && (!player(entry) || (!global_display_bots && player(entry)~'player_type' == 'fake')));
-    //entry != global_total_text && ((global_stat:0 == 'digs' && global_server_whitelisted && system_info('server_whitelist')~entry == null) && (!player(entry) || (!global_display_bots && player(entry)~'player_type' == 'fake')));
+    if(global_stat:0 == 'digs' && global_server_whitelisted, return(system_info('server_whitelist')~str(entry) == null));
+    return(!player(entry) || (!global_display_bots && player(entry)~'player_type' == 'fake'));
 );
 
 removeInvalidEntries() -> (
