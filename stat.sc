@@ -24,37 +24,37 @@ global_dig_data = {'combined_blocks' -> [null, 'Combined Blocks'], 'total' -> [[
 
 global_help_pages = [
     [
-        'y /app_name mined <block> ', 'f ｜ ', 'g Amount of <block> mined', ' \n',
-        'y /app_name used <item> ', 'f ｜ ', 'g Amount of <item> used or placed', ' \n',
-        'y /app_name crafted <item> ', 'f ｜ ', 'g Amount of <item> crafted', ' \n',
-        'y /app_name dropped <item> ', 'f ｜ ', 'g Amount of <item> dropped', ' \n',
-        'y /app_name picked_up <item> ', 'f ｜ ', 'g Amount of <item> picked up', ' \n',
-        'y /app_name broken <item> ', 'f ｜ ', 'g Amount of <item> broken', '^g (that ran out of durability)', ' \n',
-        'y /app_name killed <entity> ', 'f ｜ ', 'g Amount of <entity> killed', ' \n',
-        'y /app_name killed_by <entity> ', 'f ｜ ', 'g Amount of times <entity> killed you', ' \n',
-        'y /app_name misc <misc_stat> ', 'f ｜ ', 'g Misc statistics, e.g. deaths, mob_kills, play_time, aviate_one_cm', ' \n',
-        'y /app_name extra <extra_stat> ', 'f ｜ ', 'g Extra statistics that are not normally in the game, e.g. xp_level, ping, health, hunger', ' \n',
-        'y /app_name bedrock_removed ', 'f ｜ ', 'g Amount of bedrock removed by hand using pistons and tnt', ' \n',
-        'y /app_name digs <tool> ', 'f ｜ ', 'g Amount of digs with <tool> (combined_blocks by default)', ' \n',
-        'y /app_name combined <combined_stat> ', 'f ｜ ', 'g Various statics combined together', ' \n',
+        '%color% /app_name mined <block> ', 'f ｜ ', 'g Amount of <block> mined', ' \n',
+        '%color% /app_name used <item> ', 'f ｜ ', 'g Amount of <item> used or placed', ' \n',
+        '%color% /app_name crafted <item> ', 'f ｜ ', 'g Amount of <item> crafted', ' \n',
+        '%color% /app_name dropped <item> ', 'f ｜ ', 'g Amount of <item> dropped', ' \n',
+        '%color% /app_name picked_up <item> ', 'f ｜ ', 'g Amount of <item> picked up', ' \n',
+        '%color% /app_name broken <item> ', 'f ｜ ', 'g Amount of <item> broken', '^g (that ran out of durability)', ' \n',
+        '%color% /app_name killed <entity> ', 'f ｜ ', 'g Amount of <entity> killed', ' \n',
+        '%color% /app_name killed_by <entity> ', 'f ｜ ', 'g Amount of times <entity> killed you', ' \n',
+        '%color% /app_name misc <misc_stat> ', 'f ｜ ', 'g Misc statistics, e.g. deaths, mob_kills, play_time, aviate_one_cm', ' \n',
+        '%color% /app_name extra <extra_stat> ', 'f ｜ ', 'g Extra statistics that are not normally in the game, e.g. xp_level, ping, health, hunger', ' \n',
+        '%color% /app_name bedrock_removed ', 'f ｜ ', 'g Amount of bedrock removed by hand using pistons and tnt', ' \n',
+        '%color% /app_name digs <dig> ', 'f ｜ ', 'g Amount of digs (combined_blocks by default)', ' \n',
+        '%color% /app_name combined <combined_stat> ', 'f ｜ ', 'g Various statics combined together', ' \n',
     ],
     [
-        'y /app_name get <category> <entry> [<player>]', 'f ｜ ', 'g Prints the value of a stat', ' \n',
-        'y /app_name hide ', 'f ｜ ', 'g Hides the scoreboard', ' \n',
-        'y /app_name show ', 'f ｜ ', 'g Shows the scoreboard', '  \n',
-        'y /app_name bots [on/off/toggle]', 'f ｜ ', 'g A shortcut for /app_name settings botsIncluded', '  \n',
-        'y /app_name settings botsIncluded [on/off/toggle] ', 'f ｜ ', 'g Includes or excludes bots in the scoreboard', ' \n',
-        'y /app_name settings digDisplay [on/off/toggle] ', 'f ｜ ', 'g Shows or hides digs in the player list footer', ' \n',
-        'y /app_name settings digDisplayColor <hex_color> ', 'f ｜ ', 'g Changes the color of digs display for yourself (leave empty to reset)', ' \n',
-        'y /app_name settings statColor <hex_color> ', 'f ｜ ', 'g Changes the color of the scoreboard name for everyone (leave empty to reset)', ' \n',
+        '%color% /app_name get <category> <entry> [<player>]', 'f ｜ ', 'g Prints the value of a stat [of an online player]', ' \n',
+        '%color% /app_name hide ', 'f ｜ ', 'g Hides the scoreboard', ' \n',
+        '%color% /app_name show ', 'f ｜ ', 'g Shows the scoreboard', '  \n',
+        '%color% /app_name bots [on/off/toggle]', 'f ｜ ', 'g A shortcut for /app_name settings botsIncluded', '  \n',
+        '%color% /app_name settings show_bots [on/off/toggle] ', 'f ｜ ', 'g Includes or excludes bots in the scoreboard', ' \n',
+        '%color% /app_name settings dig_display [on/off/toggle] ', 'f ｜ ', 'g Shows or hides digs in the player list footer', ' \n',
+        '%color% /app_name settings dig_display_color <hex_color> ', 'f ｜ ', 'g Changes the color of digs display for yourself (leave empty to reset)', ' \n',
+        '%color% /app_name settings stat_color <hex_color> ', 'f ｜ ', 'g Changes the color of the scoreboard name for everyone (leave empty to reset)', ' \n',
     ],   
     [
-        'y /app_name carousel start ', 'f ｜ ', 'g Starts a carousel of statistics', ' \n',
-        'y /app_name carousel stop ', 'f ｜ ', 'g Stops the carousel', ' \n',
-        'y /app_name carousel interval [<seconds>] ', 'f ｜ ', 'g Gets or sets the interval of the carousel', ' \n',
-        'y /app_name carousel list ', 'f ｜ ', 'g Lists carousel entries', ' \n',
-        'y /app_name carousel add <category> <entry> ', 'f ｜ ', 'g Adds an entry to the carousel', ' \n',
-        'y /app_name carousel remove <index> ', 'f ｜ ', 'g Removes an entry from the carousel', ' \n',
+        '%color% /app_name carousel start ', 'f ｜ ', 'g Starts a carousel of statistics', ' \n',
+        '%color% /app_name carousel stop ', 'f ｜ ', 'g Stops the carousel', ' \n',
+        '%color% /app_name carousel interval [<seconds>] ', 'f ｜ ', 'g Gets or sets the interval of the carousel', ' \n',
+        '%color% /app_name carousel list ', 'f ｜ ', 'g Lists carousel entries', ' \n',
+        '%color% /app_name carousel add <category> <entry> ', 'f ｜ ', 'g Adds an entry to the carousel', ' \n',
+        '%color% /app_name carousel remove <index> ', 'f ｜ ', 'g Removes an entry from the carousel', ' \n',
     ]
 ];
 
@@ -88,17 +88,19 @@ __config() -> {
         'bots on' -> ['toggleBots', true],
         'bots off' -> ['toggleBots', false],
         'bots toggle' -> ['toggleBots', null],
-        'settings botsIncluded on' -> ['toggleBots', true],
-        'settings botsIncluded off' -> ['toggleBots', false],
-        'settings botsIncluded toggle' -> ['toggleBots', null],
-        'settings digDisplay' -> ['toggleDigDisplay', null],
-        'settings digDisplay on' -> ['toggleDigDisplay', true],
-        'settings digDisplay off' -> ['toggleDigDisplay', false],
-        'settings digDisplay toggle' -> ['toggleDigDisplay', null],
-        'settings digDisplayColor' -> ['setDigDisplayColor', null],
-        'settings digDisplayColor <hex_color>' -> 'setDigDisplayColor',
-        'settings statColor' -> ['setStatColor', null],
-        'settings statColor <hex_color>' -> 'setStatColor',
+        'settings show_bots on' -> ['toggleBots', true],
+        'settings show_bots off' -> ['toggleBots', false],
+        'settings show_bots toggle' -> ['toggleBots', null],
+        'settings dig_display' -> ['toggleDigDisplay', null],
+        'settings dig_display on' -> ['toggleDigDisplay', true],
+        'settings dig_display off' -> ['toggleDigDisplay', false],
+        'settings dig_display toggle' -> ['toggleDigDisplay', null],
+        'settings dig_display_color' -> ['setDigDisplayColor', null],
+        'settings dig_display_color <hex_color>' -> 'setDigDisplayColor',
+        'settings stat_color' -> ['setStatColor', null],
+        'settings stat_color <hex_color>' -> 'setStatColor',
+        'settings default_dig' -> ['setDefaultDig', null],
+        'settings default_dig <dig>' -> 'setDefaultDig',
 
         'mined <block>' -> ['changeStat', 'mined'],
         'crafted <item>' -> ['changeStat', 'crafted'],
@@ -112,7 +114,7 @@ __config() -> {
         'extra <extra>' -> ['changeStat', 'extra'],
         'bedrock_removed' -> ['changeStat', 'bedrock_removed', 'extra'],
         'digs <dig>' -> ['changeStat', 'digs'],
-        'digs' -> ['changeStat', 'combined_blocks', 'digs'],
+        'digs' -> ['changeStat', global_default_dig || 'combined_blocks', 'digs'],
         'combined <combined>' -> ['changeStat', 'combined'],
 
         'get mined <block>' -> ['printStatValue', null, 'mined'],
@@ -231,7 +233,7 @@ __config() -> {
         }
     },
     'requires' -> {
-        'carpet' -> '>=1.4.38'
+        'carpet' -> '>=1.4.45'
     },
     'scope' -> 'global'
 };
@@ -259,8 +261,8 @@ help(page) -> (
     l = length(global_help_pages);
     if(page < 1 || page > l, exit(print('§cInvalid page number')));
     page = page - 1;
-    texts = ['fs ' + ' ' * 80, ' \n', ...global_help_pages:page, 'fs ' + ' ' * 31, 'y \ ', 'y «', str('!/app_name help %d', (page - 1) % l + 1), str('g \ Page %d/%d ', page + 1, l), 'y »', str('!/app_name help %d', (page + 1) % l + 1), '  ', 'fs ' + ' ' * 31];
-    print(format(map(texts, replace(_, 'app_name', global_app_name))));
+    texts = ['fs ' + ' ' * 80, ' \n', ...global_help_pages:page, 'fs ' + ' ' * 31, '  ', '#495057 «', '^g Previous page', str('!/app_name help %d', (page - 1) % l + 1), str('g \ Page %d/%d ', page + 1, l), '#495057 »', '^g Next page', str('!/app_name help %d', (page + 1) % l + 1), '  ', 'fs ' + ' ' * 31];
+    print(format(map(texts, replace(replace(_, 'app_name', global_app_name), '%color%', '#FFEE44'))));
 );
 
 parseCombinedFile(name) -> (
@@ -278,7 +280,7 @@ parseCombinedFile(name) -> (
 isInvalidEntry(entry) -> (
     if(entry == global_total_text, return(false));
     if(global_stat:0 == 'digs' && global_server_whitelisted, return(system_info('server_whitelist')~str(entry) == null));
-    return(!player(entry) || (!global_display_bots && player(entry)~'player_type' == 'fake'));
+    return(!player(entry) || (!global_show_bots && player(entry)~'player_type' == 'fake'));
 );
 
 removeInvalidEntries() -> (
@@ -336,8 +338,8 @@ show() -> (
 );
 
 toggleBots(value) -> (
-    global_display_bots = if(value == null, !global_display_bots, value);
-    print(format('f » ', 'g Bots are now ', ...if(global_display_bots, ['l included', 'g  in '], ['r excluded', 'g  from ']), 'g the sidebar'));
+    global_show_bots = if(value == null, !global_show_bots, value);
+    print(format('f » ', 'g Bots are now ', ...if(global_show_bots, ['l included', 'g  in '], ['r excluded', 'g  from ']), 'g the sidebar'));
     if(!global_stat, return());
     bots = filter(player('all'), _~'player_type' == 'fake');
     for(bots, updateStat(_));
@@ -373,11 +375,16 @@ setStatColor(color) -> (
     scoreboard_property('stats', 'display_name', format(str('#%s %s', global_stat_color || 'FFEE44', scoreboard_property('stats', 'display_name'))));
 );
 
+setDefaultDig(dig) -> (
+    if(player()~'permission_level' == 0, exit(print('§cYou must be an operator to modify this setting')));
+    global_default_dig = dig;
+);
+
 printStatValue(event, player, category) -> (
     player = player || player();
     value = getStat(player, category, event);
     if(!value, exit(print('§cNo value was found')));
-    print(format('f » ', str('g Value of \'%s\' for %s is ', str(global_categories:category, getDisplayName(category, event)), player), 'y ' + value));
+    print(format('f » ', str('g Value of \'%s\' for %s is ', str(global_categories:category, getDisplayName(category, event)), player), '#FFEE44 ' + value));
 );
 
 changeStat(event, category) -> (
@@ -509,10 +516,11 @@ __on_close() -> (
     write_file('carousel', 'json', global_carousel_data);
     settings = {
         'stat' -> global_stat,
-        'display_bots' -> global_display_bots,
+        'show_bots' -> global_show_bots,
         'display_digs' -> global_display_digs,
         'display_digs_color' -> global_display_digs_color,
-        'stat_color' -> global_stat_color
+        'stat_color' -> global_stat_color,
+        'default_dig' -> global_default_dig
     };
     write_file('settings', 'json', settings);
     for(global_digs, write_file(str('digs/%s', _), 'json', global_digs:_));
@@ -527,10 +535,11 @@ __on_start() -> (
     global_carousel_data = read_file('carousel', 'json') || {'interval' -> 20, 'entries' -> []};
     settings = read_file('settings', 'json');
     global_stat = settings:'stat' || [];
-    global_display_bots = settings:'display_bots';
+    global_show_bots = settings:'show_bots';
     global_display_digs = settings:'display_digs' || {};
     global_display_digs_color = settings:'display_digs_color' || {};
     global_stat_color = settings:'stat_color';
+    global_default_dig = settings:'default_dig';
     if(global_stat:0 == 'combined', [display_name, combined_category, entries] = parseCombinedFile(global_stat:1); global_combined = [combined_category, entries]);
 
     if(scoreboard()~'stats' == null, scoreboard_add('stats'));
