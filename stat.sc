@@ -44,14 +44,17 @@ global_help_pages = [
         '%color% /app_name hide ', 'f ｜ ', 'g Hides the scoreboard', ' \n',
         '%color% /app_name show ', 'f ｜ ', 'g Shows the scoreboard', '  \n',
         '%color% /app_name bots (on/off/toggle) ', 'f ｜ ', 'g A shortcut for /app_name settings botsIncluded', '  \n',
-        '%color% /app_name default_dig <dig> ', 'f ｜ ', 'g A shortcut for /app_name settings botsIncluded ', 'f *', '^g For server operators only', '  \n',
-        '%color% /app_name settings show_bots (on/off/toggle) ', 'f ｜ ', 'g Includes or excludes bots in the scoreboard', ' \n',
+        '%color% /app_name default_dig <dig> ', 'f ｜ ', 'g Sets the default dig type ', 'f *', '^g For server operators only', '  \n',
+        '%color% /app_name settings bots_included (on/off/toggle) ', 'f ｜ ', 'g Includes or excludes bots in the scoreboard', ' \n',
+        '%color% /app_name settings offline_digs (on/off/toggle) ', 'f ｜ ', 'g Includes or excludes digs of offline whitelisted players in the scoreboard', ' \n',
         '%color% /app_name settings dig_display (on/off/toggle) ', 'f ｜ ', 'g Shows or hides digs in the player list footer', ' \n',
         '%color% /app_name settings dig_display_color <hex_color> ', 'f ｜ ', 'g Changes the color of digs display for yourself (leave empty to reset)', ' \n',
-        '%color% /app_name settings stat_color <hex_color> ', 'f ｜ ', 'g Changes the color of the scoreboard name for everyone (leave empty to reset) ', 'f *', '^g For server operators only', ' \n',
-        '%color% /app_name settings combined_stat (create/delete/info) ', 'f ｜ ', 'g Create or delete a combined statistic ', 'f *', '^g For server operators only', ' \n',
+        '%color% /app_name settings stat_color <hex_color> ', 'f ｜ ', 'g Changes the color of the scoreboard name for everyone (leave empty to reset) ', 'f *', '^g For server operators only', ' \n'
     ],   
     [
+        '%color% /app_name settings combined_stat info ', 'f ｜ ', 'g Gets info about a combined statistic ', ' \n',
+        '%color% /app_name settings combined_stat create <name> <display_name> <category> <entries> ', 'f ｜ ', 'g Creates a combined statistic ', 'f *', '^g For server operators only', ' \n',
+        '%color% /app_name settings combined_stat delete <combined_stat> ', 'f ｜ ', 'g Deletes a combined statistic ', 'f *', '^g For server operators only', ' \n\n',
         '%color% /app_name carousel start ', 'f ｜ ', 'g Starts a carousel of statistics', ' \n',
         '%color% /app_name carousel stop ', 'f ｜ ', 'g Stops the carousel', ' \n',
         '%color% /app_name carousel interval [<seconds>] ', 'f ｜ ', 'g Gets or sets the interval of the carousel', ' \n',
@@ -89,9 +92,14 @@ __config() -> {
         'bots on' -> ['toggleBots', true],
         'bots off' -> ['toggleBots', false],
         'bots toggle' -> ['toggleBots', null],
-        'settings show_bots on' -> ['toggleBots', true],
-        'settings show_bots off' -> ['toggleBots', false],
-        'settings show_bots toggle' -> ['toggleBots', null],
+        'settings bots_included' -> ['toggleBots', null],
+        'settings bots_included on' -> ['toggleBots', true],
+        'settings bots_included off' -> ['toggleBots', false],
+        'settings bots_included toggle' -> ['toggleBots', null],
+        'settings offline_digs' -> ['toggleOfflineDigs', null],
+        'settings offline_digs on' -> ['toggleOfflineDigs', true],
+        'settings offline_digs off' -> ['toggleOfflineDigs', false],
+        'settings offline_digs toggle' -> ['toggleOfflineDigs', null],
         'settings dig_display' -> ['toggleDigDisplay', null],
         'settings dig_display on' -> ['toggleDigDisplay', true],
         'settings dig_display off' -> ['toggleDigDisplay', false],
@@ -148,8 +156,8 @@ __config() -> {
 
         'carousel start' -> 'startCarousel',
         'carousel stop' -> 'stopCarousel',
-        'carousel interval' -> _() -> print(format('f » ', 'g Carousel interval is currently set to ', str('d %d ', global_carousel_data:'interval' / 20), 'g seconds')),
-        'carousel interval <seconds>' -> 'setCarouselInterval',
+        'carousel interval' -> ['carouselInterval', null],
+        'carousel interval <seconds>' -> 'carouselInterval',
         'carousel remove <index>' -> 'removeCarouselEntry',
         'carousel add mined <block>' -> ['addCarouselEntry', 'mined'],
         'carousel add crafted <item>' -> ['addCarouselEntry', 'crafted'],
@@ -280,8 +288,8 @@ _error(error) -> exit(print(format(str('r %s', error))));
 
 _isInvalidEntry(entry) -> (
     if(entry == global_total_text, return(false));
-    if(global_stat:0 == 'digs' && global_server_whitelisted, return(!has(system_info('server_whitelist'), str(entry))));
-    return(!player(entry) || (!global_show_bots && player(entry)~'player_type' == 'fake'));
+    if(global_stat:0 == 'digs' && global_server_whitelisted && global_offline_digs, return(!has(system_info('server_whitelist'), str(entry))));
+    return(!player(entry) || (!global_bots_included && player(entry)~'player_type' == 'fake'));
 );
 
 removeInvalidEntries() -> (
@@ -367,11 +375,20 @@ show() -> (
 );
 
 toggleBots(value) -> (
-    global_show_bots = if(value == null, !global_show_bots, value);
-    print(format('f » ', 'g Bots are now ', ...if(global_show_bots, ['l included', 'g  in '], ['r excluded', 'g  from ']), 'g the sidebar'));
-    if(!global_stat, return());
+    global_bots_included = if(value == null, !global_bots_included, value);
+    print(format('f » ', 'g Bots are now ', ...if(global_bots_included, ['l included', 'g  in '], ['r excluded', 'g  from ']), 'g the scoreboard'));
+    if(!global_stat, exit());
     bots = filter(player('all'), _~'player_type' == 'fake');
     for(bots, updateStat(_));
+    calculateTotal();
+);
+
+toggleOfflineDigs(value) -> (
+    global_offline_digs = if(value == null, !global_offline_digs, value);
+    print(format('f » ', 'g Offline digs are now ', if(global_offline_digs, 'l enabled', 'r disabled')));
+    if(global_stat:0 != 'digs' || !global_server_whitelisted, exit());
+    for(if(global_offline_digs, system_info('server_whitelist'), player('all')), updateStat(_));
+    removeInvalidEntries();
     calculateTotal();
 );
 
@@ -436,10 +453,7 @@ showStat(category, event) -> (
     );
     global_stat = [category, event];
     scoreboard_property('stats', 'display_name', format(str('#%s %s', global_stat_color, display_name || getDisplayName(category, event))));
-    list = {};
-    for(player('all'), list += str(_));
-    if(category == 'digs' && global_server_whitelisted, for(system_info('server_whitelist'), list += _));
-    for(list, updateStat(_));
+    for(if(category == 'digs' && global_server_whitelisted && global_offline_digs, system_info('server_whitelist'), player('all')), updateStat(_));
     removeInvalidEntries();
     calculateTotal();
     show();
@@ -505,7 +519,8 @@ stopCarousel() -> (
     global_carousel_active = false;
 );
 
-setCarouselInterval(seconds) -> (
+carouselInterval(seconds) -> (
+    if(!seconds, exit(print(format('f » ', 'g Carousel interval is currently set to ', str('d %d ', global_carousel_data:'interval' / 20), 'g seconds'))));
     if(type(seconds) != 'number', _error('The interval provided is not a number'));
     global_carousel_data:'interval' = seconds * 20;
     print(format('f » ', 'g Carousel interval was set to ', str('d %d ', seconds), 'g seconds'));
@@ -578,7 +593,8 @@ __on_close() -> (
     write_file('carousel', 'json', global_carousel_data);
     settings = {
         'stat' -> global_stat,
-        'show_bots' -> global_show_bots,
+        'bots_included' -> global_bots_included,
+        'offline_digs' -> global_offline_digs,
         'display_digs' -> global_display_digs,
         'display_digs_color' -> global_display_digs_color,
         'stat_color' -> global_stat_color,
@@ -601,13 +617,15 @@ __on_start() -> (
     global_carousel_data = read_file('carousel', 'json') || {'interval' -> 200, 'entries' -> []};
     settings = read_file('settings', 'json');
     global_stat = settings:'stat' || [];
-    global_show_bots = settings:'show_bots';
+    global_bots_included = settings:'bots_included';
+    global_offline_digs = if(settings:'offline_digs' != null, settings:'offline_digs', true);
     global_display_digs = settings:'display_digs' || {};
     global_display_digs_color = settings:'display_digs_color' || {};
     global_stat_color = settings:'stat_color' || 'FFEE44';
     global_default_dig = settings:'default_dig';
     if(global_stat:0 == 'combined', [display_name, combined_category, entries] = parseCombinedFile(global_stat:1); global_combined = [combined_category, entries]);
 
+    for(if(global_stat:0 == 'digs' && global_server_whitelisted && global_offline_digs, system_info('server_whitelist'), player('all')), updateStat(_));
     removeInvalidEntries();
-    for(player('all'), updateDigs(_));
+    calculateTotal()
 );
