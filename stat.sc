@@ -75,6 +75,10 @@ __config() -> {
         {
             'source' -> 'https://raw.githubusercontent.com/CommandLeo/scarpet/main/resources/stat/combined/concrete_placed.txt',
             'target' -> 'combined/concrete_placed.txt'
+        },
+        {
+            'source' -> 'https://raw.githubusercontent.com/CommandLeo/scarpet/main/resources/stat/combined/ores_mined.txt',
+            'target' -> 'combined/ores_mined.txt'
         }
     ],
     'commands' -> {
