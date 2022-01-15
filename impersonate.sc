@@ -1,28 +1,28 @@
-global_player_name = 'PallaPalla';
+global_target = 'PallaPalla';
+global_player = 'CommandLeo';
 
 __config() -> {
     'commands' -> {
         'chat <text>' -> 'chat',
         'init' -> 'init'
     },
-    'command_permission' -> _(player) -> str(player) == 'CommandLeo',
     'scope' -> 'player'
 };
 
-chat(msg) -> print(player('all'), str('<%s> %s', global_player_name, msg));
+chat(msg) -> print(player('all'), str('<%s> %s', global_target, msg));
 
 init() -> (
-    run(str('/player %s spawn', global_player_name));
+    run(str('/player %s spawn', global_target));
     modify(player(), 'gamemode', 'spectator');
-    modify(player(global_player_name), 'flying', 1)
+    modify(player(global_target), 'flying', 1)
 );
 
 __on_tick() -> (
-    p = player(global_player_name);
+    p = player(global_target);
     if(!p, return());
-    modify(p, 'location', player()~'location')
+    modify(p, 'location', player(global_player)~'location')
 );
 
 __on_player_interacts_with_entity(player, entity, hand) -> (
-    if(hand == 'mainhand' && str(player) == 'CommandLeo' && str(entity) == global_player_name, modify(entity, 'swing'));
+    if(hand == 'mainhand' && str(player) == 'CommandLeo' && str(entity) == global_target, modify(entity, 'swing'));
 );
