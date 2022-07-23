@@ -47,7 +47,7 @@ _fill(pos, item) -> (
 
     if(global_item_list~item == null, return());
 
-    inventory_set(pos, 0, 2, item);
+    inventory_set(pos, 0, 2, if(item == 'air', ...global_dummy_item, item));
     inventory_set(pos, 1, if(stack_limit(item) == 16, 11, 17), ...global_dummy_item);
     inventory_set(pos, 2, 1, ...global_dummy_item);
     inventory_set(pos, 3, 1, ...global_dummy_item);
