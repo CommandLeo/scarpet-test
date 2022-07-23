@@ -63,7 +63,7 @@ fillItemFilterFromItems(from_pos, to_pos, item_string) -> (
 
 fillItemFilterFromItemLayout(from_pos, to_pos, layout) -> (
     items = read_file(str('item_layouts/%s', layout), 'shared_text');
-    fillItemFilter(from_pos, to_pos, item_filter, items);
+    fillItemFilter(from_pos, to_pos, items);
 );
 
 fillItemFilter(from_pos, to_pos, items) -> (
