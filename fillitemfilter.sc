@@ -45,10 +45,10 @@ _scanStrip(from_pos, to_pos) -> (
 
 _fill(pos, item) -> (
 
-    if(global_item_list~item == null, return());
+    item = if(!item || item == 'air' || global_item_list~item == null, global_dummy_item, [item, null]);
 
-    inventory_set(pos, 0, 2, if(item == 'air', ...global_dummy_item, item));
-    inventory_set(pos, 1, if(stack_limit(item) == 16, 11, 17), ...global_dummy_item);
+    inventory_set(pos, 0, 2, ...item);
+    inventory_set(pos, 1, if(stack_limit(item:0) == 16, 11, 17), ...global_dummy_item);
     inventory_set(pos, 2, 1, ...global_dummy_item);
     inventory_set(pos, 3, 1, ...global_dummy_item);
     inventory_set(pos, 4, 1, ...global_dummy_item);
@@ -62,6 +62,7 @@ fillItemFilterFromItems(from_pos, to_pos, item_string) -> (
 );
 
 fillItemFilterFromItemLayout(from_pos, to_pos, layout) -> (
+    if(list_files('item_layouts', 'shared_text')~str('item_layouts/%s', layout) == null, _error('That item layout doesn\'t exist'));
     items = read_file(str('item_layouts/%s', layout), 'shared_text');
     fillItemFilter(from_pos, to_pos, items);
 );
@@ -78,7 +79,7 @@ fillItemFilter(from_pos, to_pos, items) -> (
     for(positions,
         pos = _;
         if(block(pos) == 'hopper',
-            item = items:i;
+            item = if(i < length(items), items:i);
             _fill(pos, item);
             i += 1;
         );
