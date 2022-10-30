@@ -3,24 +3,12 @@ global_item_list = item_list();
 
 __config() -> {
     'commands' -> {
-        '<from_pos> <to_pos> items <items>' -> 'fillItemFilterFromItems',
-        '<from_pos> <to_pos> layout <layout>' -> 'fillItemFilterFromItemLayout',
+        '<from_pos> <to_pos> layout <layout>' -> 'fillItemFilterFromItemLayout'
     },
     'arguments' -> {
         'layout' -> {
             'type' -> 'term',
             'suggester' -> _(arg) -> map(list_files('item_layouts', 'shared_text'), slice(_, length('item_layouts') + 1)),
-            'case_sensitive' -> false
-        },
-        'items' -> {
-            'type' -> 'text',
-            'suggester' -> _(args) -> (
-                i = args:'items';
-                items = split(' ', i);
-                if(length(items) && slice(i, -1) != ' ', delete(items, -1));
-                items_string = join(' ', items);
-                return(if(items, map(global_item_list, str('%s %s', items_string, _)), global_item_list));
-            ),
             'case_sensitive' -> false
         },
         'from_pos' -> {
@@ -47,18 +35,13 @@ _fill(pos, item) -> (
 
     item = if(!item || item == 'air' || global_item_list~item == null, global_dummy_item, [item, null]);
 
-    inventory_set(pos, 0, 2, ...item);
-    inventory_set(pos, 1, if(stack_limit(item:0) == 16, 11, 17), ...global_dummy_item);
+    inventory_set(pos, 0, 3, ...item);
+    inventory_set(pos, 1, if(stack_limit(item:0) == 16, 10, 16), ...global_dummy_item);
     inventory_set(pos, 2, 1, ...global_dummy_item);
     inventory_set(pos, 3, 1, ...global_dummy_item);
     inventory_set(pos, 4, 1, ...global_dummy_item);
 
     for(diamond(pos, 2), if(_ == 'comparator', block_tick(_)));
-);
-
-fillItemFilterFromItems(from_pos, to_pos, item_string) -> (
-    items = split(' ', item_string);
-    fillItemFilter(from_pos, to_pos, items);
 );
 
 fillItemFilterFromItemLayout(from_pos, to_pos, layout) -> (
