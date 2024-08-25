@@ -40,14 +40,13 @@ stopImpersonating() -> (
 );
 
 __on_player_message(player, message) -> (
-    if(player() == player && global_target,
-        print(player('all'), str('<%s> %s', global_target, message));
+    if(player() == player && global_target && player(global_target),
+        print(player('all'), '<' + player(global_target)~'display_name' + '> ' + message);
         return('cancel');
     );
 );
 
 __on_tick() -> (
-    return();
     if(!global_target, return());
     target = player(global_target);
     if(!target, return());
