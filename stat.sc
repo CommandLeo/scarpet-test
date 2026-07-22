@@ -75,6 +75,8 @@ global_help_pages = [
     ]
 ];
 
+print(join('.', slice(split('\\.', system_info('game_version')), 0, 2))));
+
 __config() -> {
     'resources' -> [
         {
