@@ -75,12 +75,10 @@ global_help_pages = [
     ]
 ];
 
-print(join('.', slice(split('\\.', system_info('game_version')), 0, 2))));
-
 __config() -> {
     'resources' -> [
         {
-            'source' -> str('https://raw.githubusercontent.com/CommandLeo/scarpet/main/resources/stat/display_names/%d.json', join('.', slice(split('\\.', system_info('game_version')), 0, 2))),
+            'source' -> str('https://raw.githubusercontent.com/CommandLeo/scarpet/main/resources/stat/display_names/%s.json', join('.', slice(split('\\.', system_info('game_version')), 0, 2))),
             'target' -> 'display_names.json'
         }
     ],
