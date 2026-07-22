@@ -366,13 +366,13 @@ calculateTotal() -> (
 
 getDisplayName(category, event) -> (
     return(str(global_categories:category, if(
-        category == 'used' || category == 'broken' || category == 'crafted' || category == 'dropped' || category == 'picked_up', global_item_names, 
-        category == 'mined', global_block_names,
-        category == 'killed' || category == 'killed_by', global_entity_names,
-        category == 'custom', global_misc_stats,
-        category == 'extra', global_extra_stats,
-        category == 'digs', global_dig_data
-    ):event || event));
+        category == 'used' || category == 'broken' || category == 'crafted' || category == 'dropped' || category == 'picked_up', global_item_names:event || global_block_names:event, 
+        category == 'mined', global_block_names:event,
+        category == 'killed' || category == 'killed_by', global_entity_names:event,
+        category == 'custom', global_misc_stats:event,
+        category == 'extra', global_extra_stats:event,
+        category == 'digs', global_dig_data:event
+    ) || event));
 );
 
 getStat(player, category, event) -> (
