@@ -330,12 +330,6 @@ __config() -> {
     'scope' -> 'global'
 };
 
-display_names = read_file('display_names', 'json');
-global_misc_stats = display_names:'misc';
-global_block_names = display_names:'blocks';
-global_item_names = display_names:'items';
-global_entity_names = display_names:'entities';
-
 // HELPER FUNCTIONS
 
 _error(error) -> exit(print(format(str('r %s', error))));
@@ -750,6 +744,12 @@ __on_close() -> (
 // INITIALIZATION
 
 __on_start() -> (
+    display_names = read_file('display_names', 'json');
+    global_misc_stats = display_names:'misc';
+    global_block_names = display_names:'blocks';
+    global_item_names = display_names:'items';
+    global_entity_names = display_names:'entities';
+
     for(['stats', 'bedrock_removed', 'digs'], if(scoreboard()~_ == null, scoreboard_add(_)));
     if(all(scoreboard(), scoreboard_property(_, 'display_slot')~'list' == null), scoreboard_display('list', 'digs'));
 
